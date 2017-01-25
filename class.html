@@ -1,0 +1,54 @@
+<html>
+<head>
+	<script>
+	class A {
+		const y;
+		fun1() {
+			document.write('fun1' + this.x, this.y);
+		}
+		constructor () {
+			this.x = 112;
+		}
+	
+	}
+	
+	class B extends A {
+		fun2() {
+			document.write("fun2" + this.x);
+		}
+	}
+	
+	var objA = new A();
+	objA.fun1();
+	
+	
+	function funA (){
+		this.fun1 = function fun1() {
+			document.write('fun1' + this.x);
+		}
+		this.x = 112;
+	}
+	
+	var objfunA = new funA();
+	objfunA.fun1();
+	
+		/*
+		function fun() {
+			function inFun1() {
+				document.write('infun1');
+			}
+			
+			var inFun2 = function() {
+				document.write('inFun2');
+			};
+			
+			inFun1();
+			inFun2();
+			
+		}
+		
+		fun();
+	*/
+	</script>
+</head>
+</html>

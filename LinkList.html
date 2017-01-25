@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script>
+        function LinkList() {
+            this.head = null;
+        }
+
+        LinkList.prototype.insertFront = function(data) {
+        	var node = {};
+			node.data = data;
+			node.next = this.head;
+			this.head = node;
+        }
+		
+        LinkList.prototype.printList = function() {
+			var node = this.head;
+        	while(node!== null) {
+        		document.write(node.data + "---->");
+				node = node.next;
+        	}
+			document.write('X');
+        }
+
+        LinkList.prototype.printListMaxTimes = function(max) {
+			var node = this.head;
+			var i= 0;
+        	while(node!== null) {
+        		document.write(node.data + "---->");
+				node = node.next;
+				if (i < max) {
+					i++;
+				} else {
+					break;
+				}
+        	}
+			document.write('X');
+		}
+		
+        LinkList.prototype.makeCircularWithGivenNode = function(index) {
+			var node = this.head;
+			var i = 0;
+        	while(node.next !== null) {
+				if(i==index) {
+					var found = node;
+				}
+				node = node.next;
+				i++;
+        	}
+			node.next = found;
+		}
+		
+		//1. Test printList
+		document.write("Print the Link List: <br>");
+		var myList = new LinkList();
+		myList.insertFront(1);
+		myList.insertFront(2);
+		myList.insertFront(3);
+		myList.insertFront(4);
+		
+		//print
+		myList.printList();
+		
+		//2. Circular List
+		document.write("Make circular Link List: <br>");
+		myList.makeCircularWithGivenNode(1);
+		//myList.printList();// will become infinite
+		myList.printListMaxTimes(10);
+		
+    </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,34 @@
+<html>
+<script>
+
+
+function Touchdown() {
+	this.servers = 4;
+}
+
+Touchdown.prototype.print = function() {
+	document.write('in Touchdown', this.quote);
+}
+
+function TDFinance() {
+	this.servers = 5;
+	this.quote = 'YHOO';
+}
+
+TDFinance.prototype = new Touchdown();
+TDFinance.prototype.printQuote = function() {
+	document.write('in TDFinance', this.quote);
+}
+
+
+
+var finance = new TDFinance();
+finance.quote = 'GOOG';
+finance.printQuote();
+finance.print();
+
+ 	
+ 	
+	
+</script>
+</html>
