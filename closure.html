@@ -18,8 +18,14 @@
 
 		  for (var i = 0; i < helpText.length; i++) {
 		    var item = helpText[i];
-			var showHelp = makeFunc(item.help);
-		   	document.getElementById(item.id).onfocus = showHelp;
+		//	var showHelp = makeFunc(item.help);
+		  // 	document.getElementById(item.id).onfocus = showHelp;
+		  // immediately invoked function expression
+			(function(scopeditem) {
+				document.getElementById(scopeditem.id).onfocus = function() {
+					document.getElementById('help').innerHTML = scopeditem.help;
+				}
+			})(item);
 		  }
 		}
 

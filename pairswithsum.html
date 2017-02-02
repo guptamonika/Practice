@@ -1,0 +1,30 @@
+<html>
+<head>
+<script>
+// Given an array and a sum find the pairs
+	
+function FindPairs(arr, sum) {
+	var l = 0;
+	var r = arr.length - 1;
+	var results = [];
+	while(l < r) {
+		if (arr[l] + arr[r] === sum) {
+			console.log ("Pair: ", arr[l], arr[r]);
+			results.push([arr[l], arr[r]]);
+			l++;
+			r--;
+		} else if (arr[l] + arr[r] < sum) {
+			l++;
+		} else {
+			r--;
+		}
+	}
+	return results;
+}
+
+var arr = [2,4,6,7,9,10,12,15];
+console.log(FindPairs(arr, 19));
+</script>
+<body>
+</body>
+</html>
