@@ -1,0 +1,65 @@
+<html>
+<head>
+<script>
+// 1) Sorted array - Print the missing number from the array
+	Array.prototype.printMissing = function(start, end){
+		console.log(start, end);
+		if (typeof start === 'undefined') {
+			start = 0; // assuming 0 based index
+			console.log(this);
+		}
+		
+		if(typeof end === 'undefined') {
+			end = this.length - 1;
+		}
+		
+		// terminating condition
+		if (start === end) {
+			
+			if (this[end] === end + 1 )  {// might happen is last var is missing
+				console.log('i m in this[end] === end + 1');
+				console.log('missing number:', end + 2);
+			}
+			else {
+				console.log('missing number:', end + 1);
+			}
+			return;
+		}		
+
+		var length = end - start + 1;
+		
+		
+		// use recusion
+
+		
+		// be recursive
+		var midindex = start + Math.floor(length/2) -1;
+		
+		if (this[midindex] === midindex + 1) { 
+			// right part has issue
+			this.printMissing(midindex + 1, end);
+		} else { 
+			// left part has the missing
+			this.printMissing(start, midindex);
+		}		
+	}
+	
+	var arr = [2,3,4,5,6,7,8,9,10];
+	arr.printMissing();
+
+	var arr = [1,2,3,4,5,6,7,8,9];
+	arr.printMissing();
+
+	var arr = [1,2,3,4,6,7,8,9,10];
+	arr.printMissing();
+	
+	var arr = [1,2,4,5,6,7,8,9,10];
+	arr.printMissing();
+	
+	var arr = [1,2,3,5,6,7,8,9,10];
+	arr.printMissing();
+</script>
+<body>
+	
+</body>
+</html>

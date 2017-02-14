@@ -1,0 +1,43 @@
+<html>
+<head>
+<script>
+// Call contructor of mail object
+	function FindCoinNum(cents) {
+		console.log(cents);
+		var numCoin = 0;
+		var remainingVal = cents;
+		
+		var denominations = [25,10,5,1];
+		denominations.every(denomination =>
+		{
+				var currentNumCoin = Math.floor(remainingVal / denomination ); 
+				numCoin += currentNumCoin;
+				remainingVal = remainingVal - (currentNumCoin * denomination);
+				if (remainingVal === 0) {
+					return false;// break every loop
+				} else {
+					return true;
+				}
+		});
+		console.log(numCoin);
+		return numCoin;		
+	}
+
+	FindCoinNum(58); // 6
+	FindCoinNum(100); // 2
+	FindCoinNum(0); // 0
+	FindCoinNum(1); // 1
+	FindCoinNum(10); // 1
+	FindCoinNum(26); //4
+	
+</script>
+<body>
+	<div id='q'>
+		Given a number of cents N, write a function that will return the minimal number of coins whose values will sum up to N.
+		(denominations - quarter=25, dime=10, nickel=5, cent=1)
+ 
+		e.g. for 58 the function will return 6 (2 quarters, one nickel and 3 cents)
+	</div>
+</body>
+</html>
+

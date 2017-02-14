@@ -1,0 +1,38 @@
+var student = { 
+name : "David Rayy", 
+sclass : "VI", 
+rollno : 12 };
+
+var scienceStudent = Object.create(student);
+scienceStudent.reco = true;
+
+var markup = '';
+//markup += student.entries();
+//markup += student.values();
+for(var i in student) {
+ if(student.hasOwnProperty(i)) {
+	markup += i;
+
+}
+}
+markup += '</br>';
+for(var i in scienceStudent) {
+ if(scienceStudent.hasOwnProperty(i)) {
+	markup += i;
+}
+}
+
+markup += '</br>';
+for(var i in scienceStudent) {
+	markup += i;
+}
+
+markup += '</br>';
+for(var i in scienceStudent.__proto__) {
+ if(scienceStudent.__proto__.hasOwnProperty(i)) {
+	markup += i;
+}
+}
+
+
+document.getElementById('content').innerHTML = markup

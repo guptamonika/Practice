@@ -1,0 +1,32 @@
+<html>
+<head>
+<script>
+// Given an array and a sum find the pairs
+
+Array.prototype.findPairsWithSum = function(sum){
+	var l = 0;
+	var r = this.length - 1;
+	var results = [];
+	while(l < r) {
+		if (this[l] + this[r] === sum) {
+			console.log ("Pair: ", this[l], this[r]);
+			results.push([this[l], this[r]]);
+			l++;
+			r--;
+		} else if (this[l] + this[r] < sum) {
+			l++;
+		} else {
+			r--;
+		}
+	}
+	return results;
+};
+
+var arr = new Array(2,4,6,7,9,10,12,15);
+
+console.log(arr.findPairsWithSum(19));
+
+</script>
+<body>
+</body>
+</html>

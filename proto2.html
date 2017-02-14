@@ -1,0 +1,81 @@
+<html>
+<head>
+	<script>
+	window.onload = function(){
+		var o = {a:1,b:2}; // o.__proto will be Object
+		var p = Object.create(o); // p.__proto will be o   //func1.protptypr = Object.create(fun2.prototypr)
+		var q = Object.create(o.__proto__) //// q.__proto will be Object
+		
+		console.log(p.a); // 1
+		console.log(q.a); // undefined
+		
+		function func1(){ // func1.__proto will be some stuff with apply, call etc so we can do func1.apply bind etc 
+						// func1.prototye will be an Object with constructor
+			this.a = 1;
+		} 
+		var obj = new func1(); // obj.__proto will be func1.prototype
+		-------------------------------------------
+		class Polygon {
+		  constructor(height, width) {
+		    this.height = height;
+		    this.width = width;
+		  }
+		  polygonFunc() {
+		  }
+		}
+
+		class Square extends Polygon {
+		  constructor(sideLength) {
+		    super(sideLength, sideLength);
+		  }
+		  get area() {
+		    return this.height * this.width;
+		  }
+		  set sideLength(newLength) {
+		    this.height = newLength;
+		    this.width = newLength;
+		  }
+		}
+
+		var square = new Square(2);
+		--------------------------------------------
+		
+		function fun1(){
+			this.a = 1;
+		}
+		function fun2(){
+			this.b = 2;
+		}
+
+		fun2.prototype = Object.create(fun1.prototype); // i expect fun2.prototype.__proto to be fun1.prototype. fun2.__proto is still apply bind
+		debugger 
+		
+		// There is diff with clas and function the __proto of function is not altered whereas in class it kind of becomes the above
+		class class1 {
+		constructor(){}
+		fun1func(){}
+		}
+		class class2 extends class1 {
+		constructor(){}
+		}
+		
+		console.log(class2.prototype instanceof class1); // true
+		console.log(class2.prototype.__proto__ === class1.prototype; // true
+		console.log(class2.__proto__ == class1; // true
+			
+		console.log(fun2.__proto__ === fun1); // false, note the diff
+		console.log(fun2.__proto__ === fun1.__proto__); // true
+		console.log(fun2.prototype instanceof fun1); // true
+		console.log(fun2.prototype.__proto__ === fun1.prototype); // true
+
+		// I expect fun2.prototype= fun1 object; fun2.prototype.__proto to be fun1.prototype. fun2.__proto ??
+		debugger 
+		
+		--------------------------------------------
+	};
+	</script>
+</head>
+<body>
+	<p id="attribute-to-change">hey</p>
+</body>
+</html>

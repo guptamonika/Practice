@@ -1,12 +1,11 @@
 <!To do 
 //make a graph with adjucency list
-take input
 // output representation
-BFT
-DFT
+//BFT
+//DFT
 Try getting a file from another file
 First write in ES5 , then write again in ES6 with classes, let, arrow etc
-Try writing in some react based app
+Try writing in some react based app to take input and update 
 >
 
 <html>
@@ -20,7 +19,7 @@ Try writing in some react based app
 			this.queue = []; // empty array
 		}
 		// add at back
-		Queue.prototype.enque = function(vertexVal) {
+		Queue.prototype.enqueue = function(vertexVal) {
 			this.queue.push(vertexVal)
 		}
 
@@ -29,8 +28,14 @@ Try writing in some react based app
 			return this.queue.shift();
 		}
 		
+		Queue.prototype.empty = function() {
+			return this.queue.length < 1;
+		}
+		
 		// Queue ends
-
+		// Stack starts
+		// just use simple array directly. you already practiced with queue
+		// end
 		
 		function Vertex(value) {
 			this.value = value;
@@ -41,28 +46,30 @@ Try writing in some react based app
 			this.next = nextVertex; // TODO see if you can do a class function
 		}
 
-		function Graph(vertices) {
-			this.vertices = vertices.map(function(vertexVal){
-				return new Vertex(vertexVal);
-			});
+		function Graph(verticesCount) {
+			this.verticesCount = verticesCount;
+			this.arrayAdcList = [];
+			this.visited = [];
+			for(var i = 0; i < verticesCount; i++) {
+				this.arrayAdcList[i] = null;
+				this.visited[i] = false;
+			}
+		}
+		
+		Graph.prototype.resetVisited = function() {
+			this.visited.fill(false);		
 		}
 
 		// Add the edge from vertexVa1 to vertexVa2
 		Graph.prototype.addEdge = function(vertexVa1, vertexVal2) {
-			var vertex1 = this.searchVertex(vertexVa1);
-			if (vertex1) {
-				// go to the last node and insert this new one if it goes not exist already
-				currentVertex = vertex1;
-				while (currentVertex.next != null) {
-					if(currentVertex.value === vertexVal2) {
-						// already exist
-						return;
-					}
-					currentVertex = currentVertex.next;
-				}
-				// we are here meaning we are at the end : currentVertex.next = null
-				// create new vertex and make it next of currentVertex 
-				currentVertex.next = new Vertex(vertexVal2);
+			// if it does not exist
+			if (!this.arrayAdcList[vertexVa1]) {
+				this.arrayAdcList[vertexVa1] = new Vertex(vertexVal2);
+			} else {
+				// add to front
+				var newVertex = new Vertex(vertexVal2);
+				newVertex.next = this.arrayAdcList[vertexVa1];
+				this.arrayAdcList[vertexVa1] = newVertex;
 			}
 		};
 
@@ -72,47 +79,94 @@ Try writing in some react based app
 			this.addEdge(vertexVal2, vertexVal1);
 		}
 
-		// Search for a vertex
-		Graph.prototype.searchVertex = function(vertexVal) {
-			var found;
-			// find the vertexVal
-			this.vertices.forEach(function(vertex){
-				if (vertex.value == vertexVal) {
-					found = vertex;
-				}
-			});
-			return found;
-		};
-
 		Graph.prototype.prettyPrint = function() {
 			var markup = "";
-			this.vertices.forEach(function(vertex){
+			this.arrayAdcList.forEach(function(vertex, i){
+				markup += i + ' =====> ';
 				currentVertex = vertex;
 				while (currentVertex != null) {
 					markup += currentVertex.value + "  =>  ";
 					currentVertex = currentVertex.next;
 				}
 				markup += "</br>"
-			});
-			document.getElementById('pretty').innerHTML = markup;
+			});			
+			return markup;
 		} 
 		
 		Graph.prototype.bft = function() {
-			
+			var queue = new Queue();
+			var markup = '';
+			if (this.arrayAdcList.length < 1) {
+				return;
+			}
+			// start with 0
+			queue.enqueue(0);
+			while(!queue.empty()) {
+				//get top node
+				var vertexVal = queue.dequeue();
+				
+				// if already visited skip
+				if (this.visited[vertexVal]) {
+					continue;
+				}
+				
+				// print it
+				markup += ' ' + vertexVal + ' ';
+				
+				// mark it visited
+				this.visited[vertexVal] = true;
+				
+				// add all the children in the queue
+				var childVertex = this.arrayAdcList[vertexVal];
+				while(childVertex) {
+					queue.enqueue(childVertex.value);
+					childVertex = childVertex.next;
+				}
+			}
+			return markup;
 		}
 		
 		Graph.prototype.dft = function() {
-		
+			var stack = [];
+			var markup = '';
+			
+			graph.resetVisited();
+			
+			if (this.arrayAdcList.length < 1) {
+				return;
+			}
+			stack.push(0);
+			while(stack.length > 0) {
+				var vertexVal = stack.pop();
+				if(this.visited[vertexVal]) {
+					continue;
+				}
+				
+				markup += ' ' + vertexVal + ' ';
+				
+				// mark it visited
+				this.visited[vertexVal] = true;
+				
+				// add all the children in the stack
+				var childVertex = this.arrayAdcList[vertexVal];
+				while(childVertex) {
+					stack.push(childVertex.value);
+					childVertex = childVertex.next;
+				}				
+			}
+			return markup;
 		}
 
 		var graph;
 		
 		function updateGraph() {
-			console.log("hey")
-			
+			document.getElementById('bft').innerHTML = graph.bft();
+			document.getElementById('pretty').innerHTML = graph.prettyPrint();
+			document.getElementById('dft').innerHTML = graph.dft();
 		}
+		
 		function fillDefaultGraph() {
-			graph = new Graph([0,1,2,3,4]);
+			graph = new Graph(5);
 			graph.addEdgeBi(0,1);
 			graph.addEdgeBi(1,2);
 			graph.addEdgeBi(2,3);
@@ -120,10 +174,10 @@ Try writing in some react based app
 			graph.addEdgeBi(0,4);
 			graph.addEdgeBi(1,3);
 			graph.addEdgeBi(1,4);
-			graph.prettyPrint();
 		}	
 		
 		fillDefaultGraph();	
+		updateGraph();
 	}
 
 	window.onload = onload;

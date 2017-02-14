@@ -1,0 +1,23 @@
+<html>
+<head>
+<script>
+// Call contructor of mail object
+	function Page(lang) {
+		this.lang = lang;
+	}
+	
+	function QuotePage(quote,lang) {
+		this.quote = quote;
+		Page.call(this,lang);
+	}
+	
+	QuotePage.prototype = Object.create(Page.prototype);
+
+	var obj = new QuotePage('YHOO', 'en');
+	document.write(obj.lang, obj.quote);
+
+</script>
+<body>
+	
+</body>
+</html>
