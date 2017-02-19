@@ -1,0 +1,82 @@
+<html>
+<head>
+<script>
+	function selectionSort() {
+		
+		for(var i = 0; i < this.length; i++) {
+			// find min and place and a[0];
+			var minIndex = i;
+			for(j = i + 1 ; j < this.length; j++) {
+				//find min
+				if (this[j] < this[minIndex]) {
+					minIndex = j;
+				}
+			}
+			// swap 
+			if(minIndex !== i) {
+				var temp = this[i];
+				this[i] = this[minIndex];
+				this[minIndex] = temp;
+			}
+		}		
+	}
+
+	function insertionSort() {
+		for(var i = 0; i < this.length; i++) {
+			// assume 0 to i-1 are sorted and insert i at correct place
+			var toInsert = this[i];
+			
+			var j = i-1;
+			while(j > -1 && this[j] > toInsert) {
+				this[j+1] = this[j];
+				j--;
+			}
+			this[j+1] = toInsert;
+		}
+	}
+	
+	function bubbleSort() {
+		for(var i = 0; i < this.length; i++) {
+			// bubble the max to the end by swapping
+			for(var j = 0; j < this.length - i - 1; j++) {
+				if(this[j] > this[j+1]) {
+					var temp = this[j];
+					this[j] = this[j+1];
+					this[j+1] = temp;
+				}
+			}
+		}
+	}
+	
+	Array.prototype.selectionSort = selectionSort;
+	Array.prototype.insertionSort = insertionSort;
+	Array.prototype.bubbleSort = bubbleSort;
+	
+	
+	var allArr = [
+		[72,3,8,2,0,45,33],
+		[1],
+		[72,3],
+		[3,3],
+		[3,6],
+	];
+	console.log("selectionSort:");
+	allArr.forEach(arr=> {
+		arr.selectionSort();
+		console.log(arr);
+	});
+	console.log("insertionSort:");
+	allArr.forEach(arr=> {
+		arr.insertionSort();
+		console.log(arr);
+	});
+	console.log("bubbleSort:");
+	allArr.forEach(arr=> {
+		arr.bubbleSort();
+		console.log(arr);
+	});
+</script>
+<body>
+	
+</body>
+</html>
