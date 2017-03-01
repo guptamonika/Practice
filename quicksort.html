@@ -1,0 +1,71 @@
+<html>
+<head>
+<script>
+	function quickSortRecur(low, high) {
+		// have last as pivot
+		pivotIdex = high;
+		
+		// find the correct pos for pivot
+		posForPivot = this.partition(low, high, pivotIdex);
+		if (posForPivot - 1 > low) {
+			this.quickSortRecur(low, posForPivot - 1);
+		}
+		if (posForPivot + 1 < high) {
+			this.quickSortRecur(posForPivot + 1, high);
+		}
+	}
+
+	function partition(low, high, pivotIndex) {
+		var greaterIndex = low - 1;
+		for(var currentIndex = low; currentIndex <= high; currentIndex++) {
+			if(this[currentIndex] <= this[pivotIndex]) {
+				greaterIndex ++;
+				this.swap(currentIndex, greaterIndex);
+			}		
+		}
+		
+		return greaterIndex;
+	}
+
+	function swap(i,j) {
+		if (i===j) return;
+		this[i] += this[j];
+		this[j] = this[i] - this[j];
+		this[i] -= this[j];;
+	}
+	
+	function quickSort() {
+		this.quickSortRecur(0, this.length - 1);
+	}
+
+	Array.prototype.quickSort = quickSort;
+	Array.prototype.quickSortRecur = quickSortRecur;
+	Array.prototype.partition = partition;
+	Array.prototype.swap = swap;
+	
+	
+	// test cases for sorting
+	var allArr = [
+		[5,3,1],
+		[2,5,3,1],
+		[72,3,8,2,0,45,33],
+		[10,9,8,7,6,5,4,3,2,1],
+		[1,2,3,4,5,5,4,3,2,1],
+		[1,2,3,4,5],
+		[1],
+		[72,3],
+		[3,3],
+		[3,6]
+	];
+	console.log("quickSort:");
+	allArr.forEach(arr=> {
+		arr.quickSort();
+		console.log(arr);
+	});
+	
+	
+</script>
+<body>
+	
+</body>
+</html>

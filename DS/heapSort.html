@@ -1,0 +1,101 @@
+<html>
+<head>
+<script>
+
+	function heapSort() {
+		// build the max heap
+		convertToMaxHeap.call(this);
+		// replace max with last and heapify.
+		for (var i = this.length - 1 ; i > -1; i--) {
+			swap.call(this,0,i);
+			heapify.call(this,0, i-1);
+		}		
+	}
+
+	function convertToMaxHeap() {
+		// last half will anyways be leaf node
+		for (var i = Math.floor(this.length /2) - 1 ; i >= 0; i--) {
+			heapify.call(this,i);
+		}
+	}
+
+	function heapify(index, high) {
+		if (typeof high === 'undefined') {
+			high = this.length - 1;
+		}
+		
+		// if leaf node return
+		if (index > Math.floor(this.length/2)) {
+			return;
+		}
+		
+		var leftIndex = index * 2 + 1;
+		var rightIndex = index * 2 + 2;
+		var maxIndex; 
+		
+		if (leftIndex > high) {
+			return;  // both  already been taken care of 
+		} else if (rightIndex > high) {
+			// worry only about left node
+			maxIndex = this[index] > this[leftIndex]? index: leftIndex;		
+		} else { // both are valid
+			maxIndex = maxIndexIn.call(this,leftIndex, rightIndex, index, high);
+		}
+		 // since the leaf nodes are heapified already, all others are going to be smaller than current index
+		if (maxIndex === index ) {
+			return;
+		} else {
+			swap.call(this,maxIndex, index);
+		}
+		heapify.call(this,maxIndex, high);
+	}
+	
+	function maxIndexIn(i,j,k, high) {
+		if (this[i] > this[j]) {
+			maxIndex = i;
+		} else {
+			maxIndex = j;
+		}
+		
+		if (this[k] > this[maxIndex]) {
+			return k;
+		} else {
+			return maxIndex;
+		}
+	}
+
+	function swap(i,j) {
+		if (i===j) return;
+		this[i] += this[j];
+		this[j] = this[i] - this[j];
+		this[i] -= this[j];;
+	}
+
+	Array.prototype.heapSort = heapSort;
+
+	// test cases for sorting
+	var allArr = [
+		[3,5,1],
+		[5,0,3,1],
+		[2,5,3,1],
+		[72,3,8,2,0,45,33],
+		[10,9,8,7,6,5,4,3,2,1],
+		[1,2,3,4,5,5,4,3,2,1],
+		[1,2,3,4,5],
+		[1],
+		[72,3],
+		[3,3],
+		[3,6]
+	];
+	console.log("heapSort:");
+	allArr.forEach(arr=> {
+		arr.heapSort();
+		console.log(arr);
+	});
+	
+	
+</script>
+<body>
+	
+</body>
+</html>
